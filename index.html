@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Validation</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2>Registration Form</h2>
+      <form onsubmit="return validateForm()">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" class="form-control" placeholder="Enter your name" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" class="form-control" placeholder="Enter your email" />
+        </div>
+        <div class="form-group">
+          <label for="age">Age:</label>
+          <input type="number" id="age" class="form-control" placeholder="Enter your age" />
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" class="form-control" placeholder="Enter your password" />
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender:</label>
+          <select id="gender" class="form-control">
+            <option value="">Select your gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Education:</label><br />
+          <input type="radio" id="highschool" name="education" value="High School" />
+          <label for="highschool">High School</label><br />
+          <input type="radio" id="bachelor" name="education" value="Bachelor" />
+          <label for="bachelor">Bachelor</label><br />
+          <input type="radio" id="master" name="education" value="Master" />
+          <label for="master">Master</label><br />
+          <input type="radio" id="phd" name="education" value="PhD" />
+          <label for="phd">PhD</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+      function validateForm() {
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const age = document.getElementById("age").value;
+        const password = document.getElementById("password").value;
+        const gender = document.getElementById("gender").value;
+        const education = document.querySelector('input[name="education"]:checked');
+
+        // Memastikan semua field yang diperlukan telah diisi
+        if (!name || !email || !age || !password || !gender || !education) {
+          alert("Please fill in all fields.");
+          return false;
+        }
+
+        // Validasi Email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email.match(emailRegex)) {
+          alert("Please enter a valid email address.");
+          return false;
+        }
+
+        // Validasi Usia
+        const ageNumber = parseInt(age);
+        if (isNaN(ageNumber) || ageNumber < 0 || ageNumber > 150) {
+          alert("Please enter a valid age.");
+          return false;
+        }
+
+        // Validasi Password
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+        if (!password.match(passwordRegex)) {
+          alert("Password must be at least 6 characters long and contain at least one lowercase letter, one uppercase letter, and one special symbol (e.g. $, !, %, *, ?, &, etc.).");
+          return false;
+        }
+
+        return true; // Form submission will proceed if true is returned.
+      }
+    </script>
+  </body>
+</html>
